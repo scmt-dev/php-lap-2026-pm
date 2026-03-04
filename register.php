@@ -15,9 +15,30 @@ if($isSubmit) {
         $error = true;
     }
 
+    if(!$email) {
+        $message = "Email is required";
+        $error = true;
+    }
+
+    if(!$password) {
+        $message = "Password is required";
+        $error = true;
+    }
+
+    if(strlen($password) < 6) {
+        $message = "Password must be at least 6 characters";
+        $error = true;
+    }
+
+    if($password !== $confirm_password) {
+        $message = "Password does not match";
+        $error = true;
+    }
+
     if(!$error) {
         $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
+        $password = password_hash($password, PASSWORD_DEFAULT);
         $stmt->bind_param("sss", $name, $email, $password);
         $stmt->execute();
         $message = "User registered successfully!";
