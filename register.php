@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "core/db.php";
 $isSubmit = isset($_POST['submit']);
 
 $message = '';

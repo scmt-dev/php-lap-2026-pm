@@ -1,11 +1,18 @@
 <?php
+require_once "core/db.php";
+require_once "core/auth.php";
 $isSubmit = isset($_POST['submit']);
 if($isSubmit) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    echo "Email: " . $email . "<br>";
-    echo "Password: " . $password;
+    $message = login($email, $password);
+    if($message['error']) {
+        echo $message['message'];
+    } else {
+        header("Location: index.php");
+    }
+
 }
 ?>
 <!DOCTYPE html>
