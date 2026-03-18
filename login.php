@@ -1,14 +1,22 @@
 <?php
-require_once "core/db.php";
+# core 
 require_once "core/auth.php";
+require_once "core/db.php";
+
+# helper
+require_once "helper.php";
+
 $isSubmit = isset($_POST['submit']);
+
 if($isSubmit) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-
     $message = login($email, $password);
     if($message['error']) {
         echo $message['message'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        writeLog("$ip|$email".$message['message']);
+        errorHanding($ip .'|'.$message['message']);
     } else {
         header("Location: index.php");
     }

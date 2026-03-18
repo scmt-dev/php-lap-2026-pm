@@ -1,4 +1,5 @@
 <?php
+// function or user-defined function
 function say() {
     echo "Hello, World!";
 }
