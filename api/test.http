@@ -1,0 +1,19 @@
+
+###
+GET http://localhost/my-app/api/users.php HTTP/1.1
+
+
+###
+POST http://localhost/my-app/api/users.php HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Doe",
+    "email": "kamushken@gmail"
+} 
+
+###
+PUT http://localhost/my-app/api/users.php HTTP/1.1
+
+###
+PATCH http://localhost/my-app/api/users.php HTTP/1.1
