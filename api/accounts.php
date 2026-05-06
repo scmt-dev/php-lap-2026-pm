@@ -16,8 +16,13 @@ switch ($method) {
             if($result->num_rows > 0) {
                 $data = $result->fetch_assoc();
                 echo json_encode($data);
+                exit;
             }
         }
+        $sql = "SELECT * FROM accounts";
+        $result = $db->query($sql);
+        $data['accounts'] = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode($data);
         break;
     case 'POST':
         break;
