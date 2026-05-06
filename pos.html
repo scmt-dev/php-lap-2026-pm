@@ -436,15 +436,22 @@ tailwind.config = {
 <!-- ============ SCRIPT ============ -->
 <script>
 // ============ DATA ============
-const categories = [
-  { id: 'all', name: 'All Items', icon: 'fa-border-all', color: '#F59E0B' },
-  { id: 'coffee', name: 'Coffee & Drinks', icon: 'fa-mug-hot', color: '#D97706' },
-  { id: 'bakery', name: 'Pastries', icon: 'fa-cookie-bite', color: '#EF4444' },
-  { id: 'sandwiches', name: 'Sandwiches', icon: 'fa-bread-slice', color: '#059669' },
-  { id: 'salads', name: 'Salads & Bowls', icon: 'fa-leaf', color: '#10B981' },
-  { id: 'desserts', name: 'Desserts', icon: 'fa-ice-cream', color: '#EC4899' },
-  { id: 'snacks', name: 'Quick Snacks', icon: 'fa-bolt', color: '#8B5CF6' },
+let categories = [
+  // { id: 'all', name: 'All Items', icon: 'fa-border-all', color: '#F59E0B' },
+  // { id: 'coffee', name: 'Coffee & Drinks', icon: 'fa-mug-hot', color: '#D97706' },
+  // { id: 'bakery', name: 'Pastries', icon: 'fa-cookie-bite', color: '#EF4444' },
+  // { id: 'sandwiches', name: 'Sandwiches', icon: 'fa-bread-slice', color: '#059669' },
+  // { id: 'salads', name: 'Salads & Bowls', icon: 'fa-leaf', color: '#10B981' },
+  // { id: 'desserts', name: 'Desserts', icon: 'fa-ice-cream', color: '#EC4899' },
+  // { id: 'snacks', name: 'Quick Snacks', icon: 'fa-bolt', color: '#8B5CF6' },
 ];
+const API = 'http://localhost/my-app/api/'; // placeholder for real API endpoint
+async function getCategories() {
+  const res = await fetch(API + 'categories.php');
+  const data = await res.json();
+  categories = data.categories;
+}
+
 
 const products = [
   { id: 1, name: 'Espresso', price: 3.50, cat: 'coffee', img: 'https://picsum.photos/seed/esp01/200/200' },
@@ -806,13 +813,14 @@ function printCurrentReceipt() {
 }
 
 // ============ RENDER ============
-function renderCategories() {
+async function renderCategories() {
+  await getCategories();
   // Desktop sidebar
   const sb = document.getElementById('catSidebar');
   sb.innerHTML = categories.map(c => `
     <button onclick="setCategory('${c.id}')" class="cat-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-sm transition ${state.activeCategory === c.id ? 'active' : 'text-p-muted hover:text-p-text hover:bg-p-hover'}">
       <div class="cat-dot w-2 h-2 rounded-full flex-shrink-0 transition" style="background:${state.activeCategory === c.id ? c.color : 'transparent'}"></div>
-      <i class="fas ${c.icon} w-4 text-center text-xs"></i>
+      ${c.icon}
       <span class="truncate">${c.name}</span>
       ${c.id !== 'all' ? `<span class="ml-auto text-[10px] text-p-muted">${products.filter(p => p.cat === c.id).length}</span>` : `<span class="ml-auto text-[10px] text-p-muted">${products.length}</span>`}
     </button>
