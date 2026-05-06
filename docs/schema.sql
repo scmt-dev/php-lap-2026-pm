@@ -32,3 +32,27 @@ create table transactions (
     foreign key (account_id) references accounts(id)
 );
 
+
+create table categories(
+    id int auto_increment primary key,
+    name varchar(30) not null,
+    icon varchar(255) null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
+-- products
+create table products (
+    id int auto_increment primary key,
+    name varchar(255) not null,
+    description text,
+    price decimal(18, 2) not null,
+    category_id int,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
+    foreign key (category_id) references categories(id)
+);
+
+-- orders
+-- order_items
+
