@@ -48,6 +48,7 @@ create table products (
     description text,
     price decimal(18, 2) not null,
     category_id int,
+    image varchar(255),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
     foreign key (category_id) references categories(id)
